@@ -34,9 +34,37 @@
     <div class="item item25">25</div>
   </div>
 
-<script>
-//Your code goes here 
-</script>
+ <script>
+      const items = document.getElementById('items');
+      let isDragging = false;
+      let startX;
+      let scrollLeft;
+
+      items.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX - items.offsetLeft;
+        scrollLeft = items.scrollLeft;
+        items.style.cursor = 'grabbing';
+      });
+
+      items.addEventListener('mouseleave', () => {
+        isDragging = false;
+        items.style.cursor = 'grab';
+      });
+
+      items.addEventListener('mouseup', () => {
+        isDragging = false;
+        items.style.cursor = 'grab';
+      });
+
+      items.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - items.offsetLeft;
+        const walk = (x - startX) * 3; // Adjust the multiplier based on your preference for sliding speed
+        items.scrollLeft = scrollLeft - walk;
+      });
+    </script>
 
   </body>
 </html>
